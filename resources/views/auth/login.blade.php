@@ -2,7 +2,7 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" novalidate>
         @csrf
 
         <!-- Email Address -->
@@ -28,19 +28,26 @@
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Recordarme') }}</span>
             </label>
         </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
+        <div class="flex flex-col items-center justify-center my-3">
+            <div class="flex justify-between gap-5 w-full">
+                @if (Route::has('password.request'))
+                    <x-link
+                        :href="route('register')"
+                    >
+                        Crear Cuenta
+                    </x-link>
+                    <x-link
+                        :href="route('password.request')"
+                    >
+                        Olvidaste tu Contraseña?
+                    </x-link>
+                @endif
+            </div>
+            <x-primary-button class="w-full justify-center mt-4">
+                {{ __('Iniciar Sesión') }}
             </x-primary-button>
         </div>
     </form>
