@@ -1,43 +1,49 @@
-<form class="md:w-1/2 space-y-5">
+<form class="md:w-1/2 space-y-5" wire:submit.prevent='crearVacante' novalidate>
     <div>
         <x-input-label for="titulo" :value="__('Vacante')" />
         <x-text-input
             id="titulo"
             class="block mt-1 w-full"
             type="text"
-            name="titulo"
+            wire:model="titulo"
             :value="old('titulo')"
             required
             autofocus
             placeholder="Titulo Vacante"
         />
-        <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
+        @error('titulo')
+            <livewire:mostrar-alerta :message="$message" />
+        @enderror
     </div>
     <div>
         <x-input-label for="salario" :value="__('Salario')" />
             <select
                 id="salario"
-                name="salario"
+                wire:model="salario"
                 class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full">
                     <option value="">-- Selecciona un Rango -- </option>
                     @foreach ($salarios as $salario)
                         <option value="{{ $salario->id}}">{{ $salario->salario}}</option>
                     @endforeach
             </select>
-        <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
+        @error('salario')
+            <livewire:mostrar-alerta :message="$message" />
+        @enderror
     </div>
     <div>
         <x-input-label for="categoria" :value="__('Categoria')" />
             <select
                 id="categoria"
-                name="categoria"
+                wire:model="categoria"
                 class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full">
                     <option value="">-- Selecciona una Categoria -- </option>
                     @foreach ($categorias as $categoria)
                         <option value="{{ $categoria->id}}">{{ $categoria->categoria}}</option>
                     @endforeach
             </select>
-        <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
+        @error('categoria')
+            <livewire:mostrar-alerta :message="$message" />
+        @enderror
     </div>
     <div>
         <x-input-label for="empresa" :value="__('Empresa')" />
@@ -45,13 +51,15 @@
             id="empresa"
             class="block mt-1 w-full"
             type="text"
-            name="empresa"
+            wire:model="empresa"
             :value="old('empresa')"
             required
             autofocus
             placeholder="Nombre de la Empresa"
         />
-        <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
+        @error('empresa')
+            <livewire:mostrar-alerta :message="$message" />
+        @enderror
     </div>
     <div>
         <x-input-label for="ultimo_dia" :value="__('Ultimo dia para Postularse')" />
@@ -59,21 +67,26 @@
             id="ultimo_dia"
             class="block mt-1 w-full"
             type="date"
-            name="ultimo_dia"
+            wire:model="ultimo_dia"
             :value="old('ultimo_dia')"
             required
             autofocus
         />
-        <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
+        @error('ultimo_dia')
+            <livewire:mostrar-alerta :message="$message" />
+        @enderror
     </div>
     <div>
-        <x-input-label for="ultimo_dia" :value="__('Descripción Puesto')" />
+        <x-input-label for="descripcion" :value="__('Descripción Puesto')" />
         <textarea
-            name="descripcion"
+            id="descripcion"
+            wire:model="descripcion"
             placeholder="Descripción del general del puesto y experiencia"
             class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full h-72"
         ></textarea>
-        <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
+        @error('descripcion')
+            <livewire:mostrar-alerta :message="$message" />
+        @enderror
     </div>
     <div>
         <x-input-label for="imagen" :value="__('Imagen')" />
@@ -81,9 +94,18 @@
             id="imagen"
             class="block mt-1 w-full"
             type="file"
-            name="imagen"
+            wire:model="imagen"
+            accept="image/*"
         />
-        <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
+        <div class="my-5 w-96">
+            @if($imagen)
+                <p>Imagen:</p>
+                <img src="{{ $imagen->temporaryUrl() }}">
+            @endif
+        </div>
+        @error('imagen')
+            <livewire:mostrar-alerta :message="$message" />
+        @enderror
     </div>
     <x-primary-button class="w-full justify-center mt-4">
         {{ __('Registrar Cuenta') }}
