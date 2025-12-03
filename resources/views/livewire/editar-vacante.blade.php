@@ -1,4 +1,4 @@
-<form class="md:w-1/2 space-y-5" wire:submit.prevent='crearVacante' novalidate>
+<form class="md:w-1/2 space-y-5" wire:submit.prevent='editarVacante' novalidate>
     <div>
         <x-input-label for="titulo" :value="__('Vacante')" />
         <x-text-input
@@ -94,20 +94,20 @@
             id="imagen"
             class="block mt-1 w-full"
             type="file"
-            wire:model="imagen"
+            wire:model="imagen_nueva"
             accept="image/*"
         />
         <div class="my-5 w-80 ">
             <x-input-label :value="__('Imagen Actual')" />
             <img src=" {{ asset('storage/vacantes/' . $imagen) }}" alt="{{ 'Imagen Vacante ' . $titulo}}">
         </div>
-        {{-- <div class="my-5 w-96">
-            @if($imagen)
-                <p>Imagen:</p>
-                <img src="{{ $imagen->temporaryUrl() }}">
+        <div class="my-5 w-96">
+            @if($imagen_nueva)
+                <p>Imagen Nueva:</p>
+                <img src="{{ $imagen_nueva->temporaryUrl() }}">
             @endif
-        </div> --}}
-        @error('imagen')
+        </div>
+        @error('imagen_nueva')
             <livewire:mostrar-alerta :message="$message" />
         @enderror
     </div>
@@ -115,4 +115,5 @@
         {{ __('Guardar Cambios') }}
     </x-primary-button>
 </form>
+
 
